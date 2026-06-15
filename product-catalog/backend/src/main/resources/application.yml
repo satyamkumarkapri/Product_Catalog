@@ -7,9 +7,9 @@ spring:
   
   # PostgreSQL Configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/product_catalog
-    username: postgres
-    password: 1234
+    url: jdbc:postgresql://dpg-d8ntgcjtqb8s73dj5gk0-a:5432/product_catalog_lxrp
+    username: product_catalog_lxrp_user
+    password: aWR8wDSFq27UzhuYf28nLokzOJRXUhmo
     driver-class-name: org.postgresql.Driver
 
   jpa:
