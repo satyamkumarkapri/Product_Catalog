@@ -1,7 +1,7 @@
 databases:
   - name: catalogx-db
     databaseName: product_catalog
-    user: postgres
+    user: catalogx_user
     plan: free
 
 services:
