@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: product-catalog
+  
+  # PostgreSQL Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product_catalog
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+
+  # MongoDB Atlas Configuration
+  data:
+    mongodb:
+      # Replace with your actual MongoDB Atlas cluster connection string
+      # Ensure you include the database name 'product_catalog'
+      uri: mongodb://satyam:satyam@ac-9yht7ed-shard-00-00.vw83dw2.mongodb.net:27017,ac-9yht7ed-shard-00-01.vw83dw2.mongodb.net:27017,ac-9yht7ed-shard-00-02.vw83dw2.mongodb.net:27017/product_catalog?ssl=true&replicaSet=atlas-7bbd67-shard-0&authSource=admin&appName=Cluster0&connectTimeoutMS=2000&serverSelectionTimeoutMS=2000
+
+# Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+# Logging Configuration
+logging:
+  level:
+    org.springframework.web: INFO
+    com.productcatalog.app: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
