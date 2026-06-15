@@ -6,22 +6,21 @@ import uvicorn
 
 app = FastAPI(title="CatalogX API Gateway")
 
-# Allow requests from the Vite React frontend
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+import os
+
+# Allow requests from any origin for ease of deployment, or specify FRONTEND_URL
+FRONTEND_URL = os.getenv("FRONTEND_URL", "*")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"], # Allow all for Render
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-SPRING_BOOT_URL = "http://localhost:8080"
-NODE_BACKEND_URL = "http://localhost:4000"
+SPRING_BOOT_URL = os.getenv("SPRING_BOOT_URL", "http://localhost:8080")
+NODE_BACKEND_URL = os.getenv("NODE_BACKEND_URL", "http://localhost:4000")
 
 @app.get("/")
 async def root():

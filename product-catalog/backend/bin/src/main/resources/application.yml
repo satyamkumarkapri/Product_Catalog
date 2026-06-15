@@ -7,9 +7,10 @@ spring:
   
   # PostgreSQL Configuration
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:product_catalog}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:1234}
+    url: jdbc:postgresql://dpg-d8nolepo3t8c73d1771g-a.oregon-postgres.render.com:5432/catalogx_db
+    username: catalogx_db_user
+    password: 9HVDzIDtZ26bjgTnRl324PbSNnImERDZ
+
     driver-class-name: org.postgresql.Driver
 
   jpa:
