@@ -1,0 +1,72 @@
+databases:
+  - name: catalogx-db
+    databaseName: product_catalog
+    user: catalogx_user
+    plan: free
+
+services:
+  - type: web
+    name: catalogx-backend-java
+    env: docker
+    dockerfilePath: product-catalog/backend/Dockerfile
+    dockerContext: product-catalog/backend
+    plan: free
+    healthCheckPath: /api/products
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: catalogx-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: catalogx-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: catalogx-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: catalogx-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: catalogx-db
+          property: password
+
+  - type: web
+    name: catalogx-node-backend
+    env: node
+    rootDir: product-catalog/node-backend
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    healthCheckPath: /health
+
+  - type: web
+    name: catalogx-api-gateway
+    env: python
+    rootDir: product-catalog/api-gateway
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: SPRING_BOOT_URL
+        sync: false # You will need to paste the Java Backend's Render URL here in the dashboard
+      - key: NODE_BACKEND_URL
+        sync: false # You will need to paste the Node Backend's Render URL here in the dashboard
+      - key: FRONTEND_URL
+        sync: false # You will need to paste the Frontend's Render URL here in the dashboard
+
+  - type: web
+    name: catalogx-frontend
+    env: static
+    rootDir: product-catalog/frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: product-catalog/frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false # You will need to paste the API Gateway's Render URL here in the dashboard
