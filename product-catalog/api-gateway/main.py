@@ -60,7 +60,7 @@ async def reverse_proxy(request: Request, path: str):
     
     body = await request.body()
     
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=60.0) as client:
         try:
             # Forward the request
             proxy_req = client.build_request(
